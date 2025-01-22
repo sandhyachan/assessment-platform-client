@@ -6,6 +6,71 @@ import SimpleFooter from '../components/SimpleFooter';
 import NavBarPrivate from '../components/NavbarPriv';
 
 export default function Settings() {
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+    })
+
+  const [error, setError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
+  const navigate = useNavigate()
+
+  const token = localStorage.getItem('tk')
+  if (!token) {
+      alert('You must be logged in to update your profile')
+      navigate('/login')
+      return
+  }
+
+  // Handle form field changes
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+    setSuccessMessage('')
+
+    const isConfirmed = window.confirm("Are you sure you want to save these changes?")
+    if (!isConfirmed) {
+      return
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/update-user', {
+        method: 'POST',
+        headers: { 
+            'Authorization': `Bearer ${token}`, 
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setSuccessMessage('Profile updated successfully')
+      } else {
+        setError(result.message || 'Something went wrong')
+      }
+    } catch (err) {
+      setError('Failed to update profile')
+      console.error(err)
+    }
+  }
+
+  // Handle password change navigation
+  const handleChangePassword = () => {
+    navigate('/change-password')
+  }
 
   return (
     <div className="min-vh-100 d-flex flex-column">
