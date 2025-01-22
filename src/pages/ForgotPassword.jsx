@@ -1,9 +1,28 @@
+import { useState } from "react";
 import NavBar from "../components/NavBar";
 import { FaPaperPlane } from "react-icons/fa";
 import '../App.css';
+import { useNavigate } from "react-router-dom";
 import SimpleFooter from "../components/SimpleFooter";
 
 export default function ForgotPassword() {
+    const navigate  = useNavigate()
+    const [error, setError] = useState(null)
+    const [email, setEmail] = useState("")
+    const [success, setSuccess] = useState(null)
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (!email) {
+            setError("Please provide a valid email address associated with your account.")
+            setSuccess(null)
+        } else {
+            setError(null)
+            setSuccess("Password reset instructions sent! Please check your email.")
+            console.log("Password reset instructions sent to:", email)
+            navigate('/reset-password')
+        }
+    }
 
     return (
         <>
@@ -29,7 +48,7 @@ export default function ForgotPassword() {
                                     name="email"
                                     placeholder="name@example.com"
                                     value={email}
-                                    
+                                    onChange={(e) => setEmail(e.target.value)}
                                     required
                                 />
                                 <div id="emailHelp" className="form-text">
