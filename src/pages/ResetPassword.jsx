@@ -1,7 +1,37 @@
+import { useState } from "react";
 import { FaKey } from "react-icons/fa"; // Icons for visual appeal
 import '../App.css';
 
 export default function ResetPassword() {
+    const [resetCode, setResetCode] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [error, setError] = useState(null)
+    const [success, setSuccess] = useState(null)
+
+    // Handle form submission
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        
+        // Basic validation
+        if (!resetCode) {
+            setError("Please enter the reset code sent to your email.")
+            return
+        }
+        if (!newPassword || !confirmPassword) {
+            setError("Both password fields are required.")
+            return
+        }
+        if (newPassword !== confirmPassword) {
+            setError("Passwords do not match. Please try again.")
+            return
+        }
+        
+        setError(null)
+        setSuccess("Your password has been successfully reset!")
+        console.log("Reset Code:", resetCode)
+        console.log("New Password:", newPassword)
+    }
 
     return (
         <div className="min-vh-100 d-flex flex-column">
@@ -29,6 +59,7 @@ export default function ResetPassword() {
                                 name="resetCode"
                                 placeholder="Enter code here"
                                 value={resetCode}
+                                onChange={(e) => setResetCode(e.target.value)}
                                 required
                             />
                         </div>
@@ -45,7 +76,7 @@ export default function ResetPassword() {
                                 name="newPassword"
                                 placeholder="Enter your new password"
                                 value={newPassword}
-                                
+                                onChange={(e) => setNewPassword(e.target.value)}
                                 required
                             />
                         </div>
@@ -62,7 +93,7 @@ export default function ResetPassword() {
                                 name="confirmPassword"
                                 placeholder="Confirm your new password"
                                 value={confirmPassword}
-                                
+                                onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
                             />
                         </div>
