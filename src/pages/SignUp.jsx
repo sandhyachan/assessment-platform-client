@@ -1,10 +1,85 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUserPlus } from 'react-icons/fa';
 import '../App.css';
 import NavBar from '../components/NavBar';
 import SimpleFooter from '../components/SimpleFooter';
 
 export default function SignUpPage() {
+  const navigate = useNavigate()
+
+  const [form, setForm] = useState({
+    firstName: '',
+    surname: '',
+    username: '',
+    phoneNumber: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    accountType: ''
+  })
+
+  const [error, setError] = useState('')
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setForm({
+      ...form,
+      [name]: value,
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (form.password !== form.confirmPassword) {
+      setError('Passwords do not match!')
+    } else {
+      setError('')
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/registration', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: form.username,
+          email: form.email,
+          password: form.password,
+          firstName: form.firstName,
+          surname: form.surname,
+          phoneNumber: form.phoneNumber,
+          accountType: form.accountType
+        })
+      })
+
+      const data = await response.json()
+
+      if( !response.ok ){
+        setError(data.message || 'An error occurred during registration.')
+        return
+      }
+
+      setForm({
+        firstName: '',
+        surname: '',
+        username: '',
+        phoneNumber: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        accountType: ''
+      })
+
+      setTimeout(() => {
+        navigate('/login')
+      }, 500)  
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="min-vh-100 d-flex flex-column">
