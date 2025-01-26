@@ -55,22 +55,31 @@ export default function LoginPage() {
         return
       }
       
-      setForm({
-        username: '',
-        password: '',
-      })
-  
-      setTimeout(() => {
-        navigate('/dashboard')
-      }, 500)
-  
-      
+      if (response.ok && data.token) {
+        localStorage.setItem('tk', data.token)
+
+        if (data.accountType === 'proctor') {
+            setTimeout(() => {
+                navigate('/teacher-dashboard')
+            }, 500)
+        } else if (data.accountType === 'student') {
+            setTimeout(() => {
+                navigate('/dashboard')
+            }, 500)
+        }
+        
+        setForm({
+            username: '',
+            password: '',
+          })
+        } else {
+        setError(data.message || 'Login failed')
+      }
     } catch (error) {
-      setError('An unexpected error occurred. Please try again later.')
-      console.error('Login error:', error)
+    setError('An unexpected error occurred. Please try again later.')
+    console.error('Login error:', error)
     }
   }
-
   return (
     <div className="min-vh-100 d-flex flex-column">
       <NavBar/>
