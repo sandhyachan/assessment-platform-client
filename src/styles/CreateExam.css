@@ -1,0 +1,123 @@
+/* CreateExamPage.css */
+
+/* General Container */
+.create-exam-container {
+    background-color: #f4f6f9;
+    min-height: 100vh;
+    padding-top: 40px;
+  }
+  
+  .create-exam-main {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 20px auto;
+  }
+  
+  .create-exam-main h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+  }
+  
+  .create-exam-form {
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+  }
+  
+  .form-control {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    color: #333;
+    background-color: #f9f9f9;
+    width: 100%;
+  }
+  
+  .form-control:focus {
+    border-color: #ffab2d;
+    outline: none;
+  }
+  
+  .questions-section {
+    margin-top: 30px;
+  }
+  
+  .question-container {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+  }
+  
+  .question-container .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .question-container .option-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .question-container .option-container input {
+    flex: 1;
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .btn-warning {
+    background-color: #ffab2d;
+    color: white;
+  }
+  
+  .btn-secondary {
+    background-color: #7f8c8d;
+    color: white;
+  }
+  
+  .btn:hover {
+    opacity: 0.8;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 767px) {
+    .create-exam-main {
+      padding: 30px;
+    }
+  
+    .form-control {
+      font-size: 0.9rem;
+    }
+  
+    .btn {
+      font-size: 0.9rem;
+    }
+  
+    .questions-section {
+      margin-top: 20px;
+    }
+  }
+  
